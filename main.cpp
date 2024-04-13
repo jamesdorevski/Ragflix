@@ -13,13 +13,13 @@
 int validate_input(int argc, char const* argv[])
 {
     if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <magnet_link> <media_type (movie|tv)>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <magnet_link> <media_type (movies|tv-shows)>" << std::endl;
         return 1;
     }
 
     std::string media_type = argv[2];
-    if (media_type != "movie" && media_type != "tv") {
-        std::cerr << "Invalid media type. Please use either 'movie' or 'tv'." << std::endl;
+    if (media_type != "movies" && media_type != "tv-shows") {
+        std::cerr << "Invalid media type. Please use either 'movies' or 'tv-shows'." << std::endl;
         return 2;
     }
 
@@ -30,6 +30,8 @@ lt::add_torrent_params create_torrent_params(std::string magnet_link, std::strin
 {
     lt::add_torrent_params params = lt::parse_magnet_uri(magnet_link);
     params.save_path = path;
+
+    return params;
 }
 
 int main(int argc, char const* argv[])
@@ -42,6 +44,6 @@ int main(int argc, char const* argv[])
     std::string path = "/mnt/external-hdd/" + media_type + "/";
 
     lt::add_torrent_params params = create_torrent_params(magnet_link, path);
-
+    
     return 0;
 }
