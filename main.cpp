@@ -1,5 +1,7 @@
 #include <iostream>
 #include <libtorrent/session.hpp>
+#include <libtorrent/add_torrent_params.hpp>
+#include <libtorrent/magnet_uri.hpp>
 
 /*
     Features:
@@ -24,10 +26,22 @@ int validate_input(int argc, char const* argv[])
     return 0;
 }
 
+lt::add_torrent_params create_torrent_params(std::string magnet_link, std::string path)
+{
+    lt::add_torrent_params params = lt::parse_magnet_uri(magnet_link);
+    params.save_path = path;
+}
+
 int main(int argc, char const* argv[])
 {
     int validation = validate_input(argc, argv);
     if (validation != 0) return validation;
+
+    std::string magnet_link = argv[1];
+    std::string media_type = argv[2];
+    std::string path = "/mnt/external-hdd/" + media_type + "/";
+
+    lt::add_torrent_params params = create_torrent_params(magnet_link, path);
 
     return 0;
 }
