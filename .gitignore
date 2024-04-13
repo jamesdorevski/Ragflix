@@ -1,0 +1,12 @@
+# Ignore the build directory
+/build/
+
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore compiled binaries and libraries
+*.o
+*.a
+*.so
+*.dll
+*.exe
