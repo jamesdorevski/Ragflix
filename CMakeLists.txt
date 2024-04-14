@@ -13,4 +13,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(libtorrent)
 
 add_executable(Ragflix main.cpp)
-target_link_libraries(Ragflix PRIVATE torrent-raster)
+target_link_libraries(Ragflix PRIVATE torrent-rasterbar)
