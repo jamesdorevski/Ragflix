@@ -1,5 +1,6 @@
 # Ignore the build directory
 /build/
+_deps/
 
 # Ignore Visual Studio Code files
 .vscode/
@@ -10,3 +11,4 @@
 *.so
 *.dll
 *.exe
+Makefile

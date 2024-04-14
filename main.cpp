@@ -97,8 +97,7 @@ int main(int argc, char const* argv[])
 
     std::string magnet_link = argv[1];
     std::string media_type = argv[2];
-    // std::string path = "/mnt/external-hdd/" + media_type + "/";
-    std::string path = "/home/james/" + media_type + "/";
+    std::string path = "/mnt/external-hdd/" + media_type + "/";
 
     lt::add_torrent_params params = create_torrent_params(magnet_link, path);
     lt::settings_pack settings = create_settings_pack();
