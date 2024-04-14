@@ -104,12 +104,14 @@ int main(int argc, char const* argv[])
     lt::settings_pack settings = create_settings_pack();
     lt::session session(settings);
     
-    std::cout << "Downloading torrent " << params.name << " to " << path << "..." << std::endl;
+    std::cout << "Downloading torrent " << params.name << " to " << path << std::endl;
 
     lt::torrent_handle handle = session.add_torrent(std::move(params));
 
     int download_status = halt_until_download_complete(session);
     if (download_status != 0) return download_status;
+
+    std::cout << "Done. Remember to rescan the Plex library." << std::endl; 
 
     return 0;
 }
