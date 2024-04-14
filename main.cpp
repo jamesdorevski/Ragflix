@@ -66,7 +66,23 @@ int halt_until_download_complete(lt::session& session)
                 std::cerr << "Error downloading torrent. Aborting..." << std::endl;
                 return 3;
             }
+
+            if (auto update_alert = lt::alert_cast<lt::state_update_alert>(alert)) {
+                for (auto& status : update_alert->status) {
+                    float download_rate_mbps = status.download_payload_rate / 125000.0f;
+                    std::cout << "Download progress: " << status.progress * 100 << "%" << " @ " << download_rate_mbps << " Mbps" << std::endl;
+
+                    if (status.download_payload_rate > 0) {
+                        int remaining_bytes = status.total_wanted - status.total_wanted_done;
+                        int remaining_seconds = remaining_bytes / status.download_payload_rate;
+
+                        std::cout << "Estimated time remaining: " << remaining_seconds << " seconds" << std::endl;
+                    }
+                }
+            }
         }
+
+        session.post_torrent_updates();
 
         std::this_thread::sleep_for(std::chrono::seconds(5));   
     }
@@ -87,6 +103,8 @@ int main(int argc, char const* argv[])
     lt::add_torrent_params params = create_torrent_params(magnet_link, path);
     lt::settings_pack settings = create_settings_pack();
     lt::session session(settings);
+    
+    std::cout << "Downloading torrent " << params.name << " to " << path << "..." << std::endl;
 
     lt::torrent_handle handle = session.add_torrent(std::move(params));
 
