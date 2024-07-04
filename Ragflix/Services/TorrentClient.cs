@@ -4,11 +4,6 @@ using MonoTorrent.Client;
 
 internal class TorrentClient
 {
-
-    public TorrentClient()
-    {
-    }
-
     public async Task DownloadMagnetLinkAsync(string magnetLink, string saveDirectory)
     {
         if (!MagnetLink.TryParse(magnetLink, out MagnetLink link))
@@ -21,7 +16,6 @@ internal class TorrentClient
         while (!torrent.Complete)
         {
             Console.Clear();
-            Console.WriteLine($"Downloading: {torrent.Torrent.Name}");
             Console.WriteLine($"Progress: {torrent.Progress:0.00}%");
             Console.WriteLine($"Download speed: {torrent.Monitor.DownloadSpeed / 1024:0.00} KB/s");
             Console.WriteLine($"Upload speed: {torrent.Monitor.UploadSpeed / 1024:0.00} KB/s");

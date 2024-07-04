@@ -26,7 +26,7 @@ internal static class Cli
         {
             IsRequired = true
         };
-        
+
         var addCommand = new Command("add", "Add a torrent to the library.")
         {
             magnetLink,
@@ -34,6 +34,15 @@ internal static class Cli
         };
 
         // add handler
+        addCommand.SetHandler(
+            async (magnetLink, torrentType) =>
+            {
+                var command = new AddCommand(magnetLink, torrentType);
+                await Handlers.DownloadAsync(command);
+            },
+            magnetLink,
+            torrentType
+        );
 
         return addCommand;
     }

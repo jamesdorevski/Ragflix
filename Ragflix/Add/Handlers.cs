@@ -2,13 +2,17 @@ namespace Ragflix.Add;
 
 internal static class Handlers 
 {
-    public static async Task<int> AddHandler(AddCommand command)
+    public static async Task<int> DownloadAsync(AddCommand command)
     {
-        // add magnet link using add command 
-        // enum - movie or tv show 
-        // pass it to torrent client 
-        // download it 
-        // once done, move to the correct folder 
+        string saveDirectory = command.TorrentType switch 
+        {
+            1 => "/mnt/external-hdd/movies",
+            2 => "/mnt/external-hdd/tv-shows",
+            _ => throw new ArgumentException("Invalid torrent type.")
+        };
+
+        var client = new TorrentClient();
+        await client.DownloadMagnetLinkAsync(command.MagnetLink, saveDirectory);
 
         return 0;
     }
