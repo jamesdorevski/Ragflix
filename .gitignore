@@ -12,3 +12,6 @@ _deps/
 *.dll
 *.exe
 Makefile
+
+bin/
+obj/
